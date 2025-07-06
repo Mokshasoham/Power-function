@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Power Calculator (x^n)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-600 flex items-center justify-center h-screen">
+  <div class="bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-sm">
+    <h2 class="text-2xl font-bold text-center mb-4 text-white">Power Calculator</h2>
+    <div class="space-y-3">
+      <input 
+        type="number" 
+        id="base" 
+        placeholder="Enter base (x)" 
+        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <input 
+        type="number" 
+        id="exponent" 
+        placeholder="Enter exponent (n)" 
+        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button 
+        onclick="calculatePower()" 
+        class="w-full p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      >
+        Calculate xⁿ
+      </button>
+      <div 
+        id="result" 
+        class="text-center text-lg font-semibold mt-4 text-white"
+      ></div>
+    </div>
+  </div>
+
+  <script>
+    function power(x, n) {
+      if (n === 0) return 1;
+      if (n < 0) return 1 / power(x, -n);
+
+      let halfPower = power(x, Math.floor(n / 2));
+      if (n % 2 === 0)
+        return halfPower * halfPower;
+      else
+        return x * halfPower * halfPower;
+    }
+
+    function calculatePower() {
+      const x = parseFloat(document.getElementById("base").value);
+      const n = parseInt(document.getElementById("exponent").value);
+      if (isNaN(x) || isNaN(n)) {
+        document.getElementById("result").textContent = "Please enter valid numbers.";
+        return;
+      }
+      const result = power(x, n);
+      document.getElementById("result").textContent = `${x} ^ ${n} = ${result}`;
+    }
+  </script>
+</body>
+</html>
